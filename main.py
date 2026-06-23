@@ -1,17 +1,16 @@
 from app.vault import Vault
-import os
 
-salt = os.urandom(16)
 
-vault = Vault(
-    master_password="1234",
-    salt = salt
-)
+password = input("Enter password: ")
 
-vault.add_password(
-    site="Steam",
-    login="test@gmail.com",
-    password="123456"
-)
+vault = Vault(password)
+
+if not vault.unlock():
+    print("Wrong password!")
+    exit()
+
+print("Vault unlocked!")
+
+vault.add_password("Steam", "test@gmail.com", "1231112456")
 
 print(vault.get_all_passwords())
